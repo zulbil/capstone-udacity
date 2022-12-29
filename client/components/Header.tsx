@@ -63,7 +63,7 @@ function Header() {
             height={40} 
             alt="profile picture"
           />
-        <p className="whitespace-nowrap font-semibold pr-3">Alex Khang</p>
+        <p className="whitespace-nowrap font-semibold pr-3">{user.name}</p>
         <ViewGrid className="icon" />
         <Chat className="icon" />
         <Bell className="icon" />

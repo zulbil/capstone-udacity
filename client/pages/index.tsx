@@ -3,8 +3,15 @@ import Head from 'next/head'
 import Header from '../components/Header'
 import { GetServerSideProps } from 'next';
 import Login from '../components/Login';
+import Sidebar from '../components/Sidebar';
+import Feed from '../components/Feed';
+import { Session } from 'next-auth';
 
-export default function Home({ session }) {
+interface HomeProps {
+  session: Promise<Session>
+}
+
+export default function Home({ session } : HomeProps) {
   if (!session) return <Login />
   return (
     <div>
@@ -12,9 +19,10 @@ export default function Home({ session }) {
         <title>Facebook</title>
       </Head>
       <Header></Header>
-      <main>
+      <main className="flex">
         {/* Sidebar */}
-        {/* Feed */}
+        <Sidebar />
+        <Feed />
         {/* Widgets */}
       </main>
     </div>
