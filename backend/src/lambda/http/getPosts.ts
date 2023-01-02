@@ -6,20 +6,20 @@ import { cors } from 'middy/middlewares'
 import { createLogger } from '../../utils/logger'
 import { formatJSONResponse } from '../../utils/api-gateway'
 import { getUserId } from '../utils'
-import { todoRepository } from '../../repositories';
+import { postRepository } from '../../repositories';
 
-const logger = createLogger('getTodos')
+const logger = createLogger('getPosts')
 
 export const handler = middy(
   async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     try {
       const userId = getUserId(event);
-      const todos = await todoRepository.getTodos(userId);
-      logger.info('Get Todos API from DynamoDB Table', { todos });      
-      const response = { items : todos };
+      const posts = await postRepository.getPosts(userId);
+      logger.info('Get Posts API from DynamoDB Table', { posts });      
+      const response = { items : posts };
       return formatJSONResponse(response);
     } catch (error: any) {
-      logger.error('Get Todos failed' , { error });  
+      logger.error('Get Posts failed' , { error });  
       return formatJSONResponse({
         message: error.message
       }, 500)

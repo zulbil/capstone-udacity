@@ -1,4 +1,4 @@
 import dynamoDBClient from "./database";
-import TodoRepository from "./TodoRepository";
+import PostRepository from "./PostRepository";
 
-export const todoRepository = new TodoRepository(dynamoDBClient());
+export const postRepository = new PostRepository(dynamoDBClient());

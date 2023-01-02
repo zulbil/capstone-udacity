@@ -1,3 +1,3 @@
-import TodoService from "./TodoService";
+import PostService from "./PostService";
 
-export const todoService = new TodoService();
+export const postService = new PostService();

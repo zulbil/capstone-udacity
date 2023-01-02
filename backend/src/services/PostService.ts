@@ -1,55 +1,54 @@
-import { todoRepository } from "../repositories";
-import { TodoItem } from "../models/TodoItem";
-import { CreateTodoRequest } from "../requests/CreateTodoRequest";
+import { postRepository } from "../repositories";
+import { PostItem } from "../models/PostItem";
+import { CreatePostRequest } from "../requests/CreatePostRequest";
 import * as uuid from 'uuid';
 import { UpdateTodoRequest } from '../requests/UpdateTodoRequest'
-import { TodoUpdate } from '../models/TodoUpdate';
+//import { TodoUpdate } from '../models/PostUpdate';
 import { createLogger } from "../utils/logger";
 
-export default class TodoService {
+export default class PostService {
 
-    private logger: any = createLogger('todoService')
+    private logger: any = createLogger('postService')
     private bucketName: string = process.env.ATTACHMENT_S3_BUCKET;
 
     constructor() {}
 
-    async getTodos(userId:string): Promise<TodoItem[]> {
-        this.logger.info('Get todos for connected user');
-        return await todoRepository.getTodos(userId);
+    async getPosts(userId:string): Promise<PostItem[]> {
+        this.logger.info('Get posts for connected user');
+        return await postRepository.getPosts(userId);
     }
 
-    async getTodo(userId:string, todoId:string): Promise<TodoItem> {
-        this.logger.info('Get one todo for connected user');
-        return await todoRepository.getTodo(userId, todoId);
+    async getPost(userId:string, postId:string): Promise<PostItem> {
+        this.logger.info('Get one post for connected user');
+        return await postRepository.getPost(userId, postId);
     }
     
-    async createTodo(
-        createTodoRequest: CreateTodoRequest,
-        jwtToken: string) : Promise<TodoItem> {
+    async createPost(
+        createPostRequest: CreatePostRequest,
+        jwtToken: string) : Promise<PostItem> {
         
         try {
 
             const itemId            = uuid.v4();
             const userId            = jwtToken;
 
-            this.logger.info('Creating new todo');
+            this.logger.info('Creating new post');
 
-            const todoTocreate = {
-                todoId: itemId,
+            const postTocreate = {
+                postId: itemId,
                 userId: userId,
-                name: createTodoRequest.name,
-                dueDate: createTodoRequest.dueDate,
+                message: createPostRequest.message,
                 createdAt: new Date().toISOString(),
-                attachmentUrl: '',
-                done: false
+                updatedAt: new Date().toISOString(),
+                attachmentUrl: ''
             };
 
-            if (!todoTocreate.name) {
-                this.logger.info('Name property is invalid');
-                throw new Error('Please provide a valid name');
+            if (!postTocreate.message) {
+                this.logger.info('Message property is invalid');
+                throw new Error('Please provide a valid message');
             }
         
-            return todoRepository.createTodo(todoTocreate);
+            return postRepository.createPost(postTocreate);
         } catch (error: any) {
             this.logger.error(error.message);
             throw new Error(error.message);
@@ -57,6 +56,7 @@ export default class TodoService {
         
     }
     
+    /*
     async updateTodo(
         id: string,
         userId: string,
@@ -97,9 +97,10 @@ export default class TodoService {
             throw new Error(error.message);
         }
     }
+    */
     
-    async deleteTodo(id: string, userId: string) {
-        this.logger.info('Deleting todo');
-        await todoRepository.deleteTodo(id, userId);
+    async deletePost(id: string, userId: string) {
+        this.logger.info('Deleting post');
+        await postRepository.deletePost(id, userId);
     }
 }

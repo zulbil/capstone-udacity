@@ -3,20 +3,17 @@
   "title": "todo",
   "type": "object",
   "properties": {
-    "name": {
-      "type": "string"
+    "message": {
+      "type": "string",
+      "minLength": 2
     },
-    "dueDate": {
+    "updatedAt": {
       "type": "string"
-    },
-    "done": {
-      "type": "boolean"
     }
   },
   "required": [
     "name",
-    "dueDate",
-    "done"
+    "updatedAt"
   ],
   "additionalProperties": false
 }
