@@ -9,7 +9,7 @@ import { createLogger } from "../utils/logger";
 export default class PostService {
 
     private logger: any = createLogger('postService')
-    private bucketName: string = process.env.ATTACHMENT_S3_BUCKET;
+    //private bucketName: string = process.env.ATTACHMENT_S3_BUCKET;
 
     constructor() {}
 
