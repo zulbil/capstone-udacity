@@ -2,7 +2,7 @@ import { postRepository } from "../repositories";
 import { PostItem } from "../models/PostItem";
 import { CreatePostRequest } from "../requests/CreatePostRequest";
 import * as uuid from 'uuid';
-import { UpdateTodoRequest } from '../requests/UpdateTodoRequest'
+//import { UpdateTodoRequest } from '../requests/UpdateTodoRequest'
 //import { TodoUpdate } from '../models/PostUpdate';
 import { createLogger } from "../utils/logger";
 
