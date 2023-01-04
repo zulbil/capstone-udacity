@@ -20,7 +20,7 @@ export const handler = middy(
       // await todoService.updateTodoAttachmentUrl(todoId, userId);
       logger.info('Generating presigned url'); 
       //return formatJSONResponse({ uploadUrl : attachmentUrl });
-      return formatJSONResponse({ uploadUrl : '' });
+      return formatJSONResponse({ todoId });
     } catch (error: any) {
       logger.error('Generating presign url failed', {error}); 
       return formatJSONResponse({
