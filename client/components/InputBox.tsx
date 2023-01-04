@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import Image from "next/image";
+import axios from 'axios';
 import { useSession } from "next-auth/react";
 import {
     VideoCamera,
@@ -8,11 +9,16 @@ import {
   } from "heroicons-react"
 
 const InputBox = () => {
+    const inputRef = useRef(null)
     const { data } = useSession()
+    
     const { user } = data
 
-    const sendPost = (e: any) => {
+    const sendPost = async (e: any) => {
         e.preventDefault();
+        if (!inputRef.current?.value) return;
+
+        console.log(data);
     }
 
     return (
@@ -29,6 +35,7 @@ const InputBox = () => {
                     <input 
                         className="rounded-full h-12 bg-gray-100 flex-grow px-5 focus:outline-none"
                         type="text" 
+                        ref={inputRef}
                         placeholder={`What's on your mind, ${user?.name} ?`} 
                     />
                     <button hidden type="submit" onClick={sendPost}></button>
