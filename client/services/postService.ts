@@ -4,21 +4,20 @@ import { Post } from "../types/Post";
 const apiEndpoint = process.env.NEXT_PUBLIC_APP_DOMAIN || ''
 
 export async function getPosts(idToken:string) : Promise<Post[]> {
-    try {
+  try {
 
-        const response = await Axios.get(`${apiEndpoint}/todos`, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${idToken}`
-            },
-        })
-    
-        return response.data.items
-    } catch (error: any) {
-        console.log('Error when fetching posts ...', error.message)
-        return []
-    }
-    
+      const response = await Axios.get(`${apiEndpoint}/todos`, {
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${idToken}`
+          }
+      })
+  
+      return response.data.items
+  } catch (error: any) {
+      console.log('Error when fetching posts ...', error.message)
+      return []
+  }
 }
 
 export async function createPost(
@@ -26,13 +25,13 @@ export async function createPost(
     newPost: Post
   ): Promise<Post|null> {
     try {
-        const response = await Axios.post(`${apiEndpoint}/posts`,  JSON.stringify(newPost), {
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${idToken}`
-            }
-          })
-          return response.data.item
+      const response = await Axios.post(`${apiEndpoint}/posts`,  JSON.stringify(newPost), {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${idToken}`
+        }
+      })
+      return response.data.item
     } catch (error: any) {
         console.log('Error when creating a new post ...', error.message)
         return null
@@ -49,4 +48,4 @@ export async function deletePost(
         'Authorization': `Bearer ${idToken}`
       }
     })
-  }
+}
