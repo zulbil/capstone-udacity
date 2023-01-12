@@ -6,14 +6,10 @@
     "message": {
       "type": "string",
       "minLength": 2
-    },
-    "createdAt": {
-      "type": "string"
     }
   },
   "required": [
-    "name",
-    "createdAt"
+    "message"
   ],
   "additionalProperties": false
 }
