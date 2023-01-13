@@ -1,19 +1,20 @@
 import React, { useRef, useState } from 'react'
 import Image from "next/image";
 import { useSession } from "next-auth/react";
-import { createPost } from "../services/postService"
+import { createPost, updatePost } from "../services/postService"
 import {
     VideoCamera,
     EmojiHappy,
     Camera
   } from "heroicons-react"
 import { Post } from '../types/Post';
-import { uploadObject } from '../services/s3Helper';
+import { uploadFileToS3 } from '../services/s3Helper';
 
 const InputBox = () => {
     const inputRef = useRef(null)
     const filepickerRef = useRef(null)
     const [imageToPost, setImageToPost] = useState(null)
+    const [file, setFile]   =   useState(null)
     const { data } = useSession()
     
     const { user } = data
@@ -26,17 +27,21 @@ const InputBox = () => {
             const newPost : Post = { message: inputRef.current?.value }
                 
             const newItem = await createPost(idToken, newPost)
-            console.log(newItem)
             if (!newItem) {
                 throw new Error('Creating post failed ...')
             }
-            if (imageToPost) {
-                const url = await uploadObject(imageToPost)
-                console.log(url)
+            if (file) {
+                const attachmentUrl = await uploadFileToS3(file)
+                const updatePostItem = await updatePost(idToken, newItem.postId, { attachmentUrl})
+                if (!updatePostItem) {
+                    throw new Error('Failed to update post attachment ...')
+                }
+                setImageToPost(null)
+                setFile(null)
             }
             inputRef.current.value = ""
         } catch (error) {
-            console.log(error.message)
+            alert(error.message)
         }
         
     }
@@ -46,15 +51,20 @@ const InputBox = () => {
         if (e.target.files[0]) {
             reader.readAsDataURL(e.target.files[0])
         }
-        console.log(reader);
 
         reader.onload = (readerEvent) => {
             setImageToPost(readerEvent?.target?.result);
+            const file = {
+                name : e.target.files[0].name,
+                data : Buffer.from(readerEvent?.target?.result)
+            }
+            setFile(file)
         }
     }
 
     const removeImage = () => {
         setImageToPost(null)
+        setFile(null)
     }
 
     return (
