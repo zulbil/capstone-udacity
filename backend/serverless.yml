@@ -99,22 +99,22 @@ functions:
 
   # TODO: Configure this function
   # Provide property for setting up CORS, Authorizer, iamRoleStatements, and request schemas
-  # UpdatePost:
-  #   handler: src/lambda/http/updatePost.handler
-  #   events:
-  #     - http:
-  #         method: patch
-  #         path: posts/{postId}
-  #         cors: true
-  #         authorizer: Auth
-  #         request:
-  #           schemas:
-  #             application/json: ${file(models/update-post-model.json)}
-  #   iamRoleStatements:
-  #     - Effect: Allow
-  #       Action:
-  #         - dynamodb:UpdateItem
-  #       Resource: !GetAtt PostsTable.Arn
+  UpdatePost:
+    handler: src/lambda/http/updatePost.handler
+    events:
+      - http:
+          method: patch
+          path: posts/{postId}
+          cors: true
+          authorizer: Auth
+          request:
+            schemas:
+              application/json: ${file(models/update-post-model.json)}
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:UpdateItem
+        Resource: !GetAtt PostsTable.Arn
               
 
   # TODO: Configure this function
