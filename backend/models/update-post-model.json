@@ -13,7 +13,6 @@
     }
   },
   "required": [
-    "message",
     "attachmentUrl"
   ],
   "additionalProperties": false
