@@ -44,7 +44,7 @@ export async function updatePost(
   updatedPost: Post
 ): Promise<Post|null> {
   try {
-    const response = await Axios.patch(`${apiEndpoint}/posts`,  JSON.stringify(updatedPost), {
+    const response = await Axios.patch(`${apiEndpoint}/posts/${postId}`,  JSON.stringify(updatedPost), {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${idToken}`
