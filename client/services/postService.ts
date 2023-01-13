@@ -38,6 +38,25 @@ export async function createPost(
     }
 }
 
+export async function updatePost(
+  idToken: string,
+  postId: string,
+  updatedPost: Post
+): Promise<Post|null> {
+  try {
+    const response = await Axios.patch(`${apiEndpoint}/posts`,  JSON.stringify(updatedPost), {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${idToken}`
+      }
+    })
+    return response.data.item
+  } catch (error: any) {
+      console.log('Error when creating a new post ...', error.message)
+      return null
+  }
+}
+
 export async function deletePost(
     idToken: string,
     postId: string
