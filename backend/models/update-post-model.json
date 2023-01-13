@@ -3,10 +3,6 @@
   "title": "post",
   "type": "object",
   "properties": {
-    "message": {
-      "type": "string",
-      "minLength": 2
-    },
     "attachmentUrl": {
       "type": "string",
       "minLength": 2

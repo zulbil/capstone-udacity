@@ -1,5 +1,6 @@
 import { DocumentClient } from "aws-sdk/clients/dynamodb";
 import { PostItem } from '../models/PostItem'
+import { PostUpdate } from "../models/PostUpdate";
 //import { PostUpdate } from '../models/PostUpdate';
 import { createLogger } from "../utils/logger";
 
@@ -53,32 +54,28 @@ export default class PostRepository {
       return post;
     }
     
-    // async updateTodo(todoId: string, userId: string, todoItem: Partial<TodoUpdate>): Promise<TodoUpdate> {
-    //   this.logger.info('Performing update operation on todo table');
-    //   const updated = await this.docClient
-    //       .update({
-    //           TableName: this.todosTable,
-    //           Key: { 
-    //             userId,
-    //             todoId 
-    //           },
-    //           UpdateExpression:
-    //               "set #name = :name, #dueDate = :dueDate, #done = :done",
-    //           ExpressionAttributeNames: {
-    //               "#name": "name",
-    //               "#dueDate": "dueDate",
-    //               "#done": "done"
-    //           },
-    //           ExpressionAttributeValues: {
-    //               ":name": todoItem.name,
-    //               ":dueDate": todoItem.dueDate,
-    //               ":done": todoItem.done
-    //           },
-    //           ReturnValues: "ALL_NEW",
-    //       })
-    //       .promise();
-    //   return updated.Attributes as TodoUpdate;
-    // }
+    async updatePost(postId: string, userId: string, postItem: Partial<PostUpdate>): Promise<PostUpdate> {
+      this.logger.info('Performing update operation on todo table');
+      const updated = await this.docClient
+          .update({
+              TableName: this.postsTable,
+              Key: { 
+                userId,
+                postId 
+              },
+              UpdateExpression:
+                  "set #attachmentUrl = :attachmentUrl",
+              ExpressionAttributeNames: {
+                  "#attachmentUrl": "attachmentUrl"
+              },
+              ExpressionAttributeValues: {
+                  ":attachmentUrl": postItem.attachmentUrl
+              },
+              ReturnValues: "ALL_NEW",
+          })
+          .promise();
+      return updated.Attributes as PostUpdate;
+    }
 
     // async updateTodoAttachment(todoId: string, userId: string, attachmentUrl: string): Promise<any> {
     //   this.logger.info('Performing update attachment operation on todo table');

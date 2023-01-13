@@ -5,6 +5,8 @@ import * as uuid from 'uuid';
 //import { UpdateTodoRequest } from '../requests/UpdateTodoRequest'
 //import { TodoUpdate } from '../models/PostUpdate';
 import { createLogger } from "../utils/logger";
+import { UpdatePostRequest } from "../requests/UpdatePostRequest";
+import { PostUpdate } from "../models/PostUpdate";
 
 export default class PostService {
 
@@ -56,33 +58,32 @@ export default class PostService {
         
     }
     
-    /*
-    async updateTodo(
+    
+    async updatePost(
         id: string,
         userId: string,
-        updateTodoRequest: UpdateTodoRequest
-        ) : Promise<TodoUpdate> {
+        updatePostRequest: UpdatePostRequest
+        ) : Promise<PostUpdate> {
         
         try {
             this.logger.info('Updating todo');
 
-            const todoItemToUpdate : Partial<TodoUpdate> = {
-                name: updateTodoRequest.name,
-                dueDate: updateTodoRequest.dueDate,
-                done: updateTodoRequest.done
+            const postIemToUpdate : Partial<PostUpdate> = {
+                attachmentUrl: updatePostRequest.attachmentUrl
             };
 
-            if (!todoItemToUpdate.name) {
-                this.logger.info('Name property is invalid');
-                throw new Error('Name property is invalid!');
+            if (!postIemToUpdate.attachmentUrl) {
+                this.logger.info('AttachmentUrl property are invalid');
+                throw new Error('AttachmentUrl property are invalid');
             }
-            return await todoRepository.updateTodo(id, userId, todoItemToUpdate);
+            return await postRepository.updatePost(id, userId, postIemToUpdate);
         } catch (error:any) {
             this.logger.error(error.message);
             throw new Error(error.message);
         }
     }
 
+    /*
     async updateTodoAttachmentUrl(
         id: string,
         userId: string
