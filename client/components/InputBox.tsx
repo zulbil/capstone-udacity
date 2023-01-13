@@ -40,7 +40,7 @@ const InputBox = () => {
                 setFile(null)
             }
             inputRef.current.value = ""
-        } catch (error) {
+        } catch (error: any) {
             alert(error.message)
         }
         
