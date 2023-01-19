@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import Image from "next/image";
 import { useSession } from "next-auth/react";
-import { createPost, updatePost } from "../services/postService"
+import { createPost, getUploadUrl, updatePost, uploadFile } from "../services/postService"
 import {
     VideoCamera,
     EmojiHappy,
@@ -31,11 +31,13 @@ const InputBox = () => {
                 throw new Error('Creating post failed ...')
             }
             if (file) {
-                const attachmentUrl = await uploadFileToS3(file)
-                const updatePostItem = await updatePost(idToken, newItem.postId, { attachmentUrl})
-                if (!updatePostItem) {
-                    throw new Error('Failed to update post attachment ...')
-                }
+                const uploadUrl = await getUploadUrl(idToken, newItem.postId)
+                await uploadFile(uploadUrl, file);
+                // const attachmentUrl = await uploadFileToS3(file)
+                // const updatePostItem = await updatePost(idToken, newItem.postId, { attachmentUrl})
+                // if (!updatePostItem) {
+                //     throw new Error('Failed to update post attachment ...')
+                // }
                 setImageToPost(null)
                 setFile(null)
             }
@@ -54,11 +56,11 @@ const InputBox = () => {
 
         reader.onload = (readerEvent) => {
             setImageToPost(readerEvent?.target?.result);
-            const file = {
-                name : e.target.files[0].name,
-                data : Buffer.from(readerEvent?.target?.result)
-            }
-            setFile(file)
+            // const file = {
+            //     name : e.target.files[0].name,
+            //     data : Buffer.from(readerEvent?.target?.result)
+            // }
+            setFile(e.target.files[0])
         }
     }
 
