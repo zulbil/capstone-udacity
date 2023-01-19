@@ -6,7 +6,7 @@ const apiEndpoint = process.env.NEXT_PUBLIC_APP_DOMAIN || ''
 export async function getPosts(idToken:string) : Promise<Post[]> {
   try {
 
-      const response = await Axios.get(`${apiEndpoint}/todos`, {
+      const response = await Axios.get(`${apiEndpoint}/posts`, {
           headers: {
               'Content-Type': 'application/json',
               'Authorization': `Bearer ${idToken}`
