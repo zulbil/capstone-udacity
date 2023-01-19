@@ -11,7 +11,7 @@ import { PostUpdate } from "../models/PostUpdate";
 export default class PostService {
 
     private logger: any = createLogger('postService')
-    //private bucketName: string = process.env.ATTACHMENT_S3_BUCKET;
+    private bucketName: string = process.env.ATTACHMENT_S3_BUCKET;
 
     constructor() {}
 
@@ -83,22 +83,22 @@ export default class PostService {
         }
     }
 
-    /*
-    async updateTodoAttachmentUrl(
+    
+    async updatePostAttachmentUrl(
         id: string,
         userId: string
-        ) : Promise<TodoUpdate> {
+        ) : Promise<PostUpdate> {
         
         try {
-            this.logger.info('Updating todo');
+            this.logger.info('Updating post');
             const attachmentUrl = `https://${this.bucketName}.s3.amazonaws.com/${id}`;
-            return await todoRepository.updateTodoAttachment(id, userId, attachmentUrl);
+            return await postRepository.updatePostAttachment(id, userId, attachmentUrl);
         } catch (error:any) {
             this.logger.error(error.message);
             throw new Error(error.message);
         }
     }
-    */
+    
     
     async deletePost(id: string, userId: string) {
         this.logger.info('Deleting post');

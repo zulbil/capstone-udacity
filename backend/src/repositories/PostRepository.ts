@@ -77,22 +77,22 @@ export default class PostRepository {
       return updated.Attributes as PostUpdate;
     }
 
-    // async updateTodoAttachment(todoId: string, userId: string, attachmentUrl: string): Promise<any> {
-    //   this.logger.info('Performing update attachment operation on todo table');
-    //   const updated = await this.docClient
-    //       .update({
-    //           TableName: this.todosTable,
-    //           Key: { userId, todoId },
-    //           UpdateExpression: "set #attachmentUrl = :attachmentUrl",
-    //           ExpressionAttributeNames: { "#attachmentUrl": "attachmentUrl" },
-    //           ExpressionAttributeValues: {
-    //               ":attachmentUrl": attachmentUrl
-    //           },
-    //           ReturnValues: "ALL_NEW",
-    //       })
-    //       .promise();
-    //   return updated.Attributes as any;
-    // }
+    async updatePostAttachment(postId: string, userId: string, attachmentUrl: string): Promise<any> {
+      this.logger.info('Performing update attachment operation on posts table');
+      const updated = await this.docClient
+          .update({
+              TableName: this.postsTable,
+              Key: { userId, postId },
+              UpdateExpression: "set #attachmentUrl = :attachmentUrl",
+              ExpressionAttributeNames: { "#attachmentUrl": "attachmentUrl" },
+              ExpressionAttributeValues: {
+                  ":attachmentUrl": attachmentUrl
+              },
+              ReturnValues: "ALL_NEW",
+          })
+          .promise();
+      return updated.Attributes as any;
+    }
   
     async deletePost(postId: string, userId: string): Promise<any> {
       this.logger.info('Performing delete operation on post table');
