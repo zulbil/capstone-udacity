@@ -1,20 +1,18 @@
 import 'source-map-support/register'
 
-import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda'
+import { APIGatewayProxyResult } from 'aws-lambda'
 import * as middy from 'middy'
 import { cors } from 'middy/middlewares'
 import { createLogger } from '../../utils/logger'
 import { formatJSONResponse } from '../../utils/api-gateway'
-import { getUserId } from '../utils'
 import { postRepository } from '../../repositories';
 
 const logger = createLogger('getPosts')
 
 export const handler = middy(
-  async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+  async (): Promise<APIGatewayProxyResult> => {
     try {
-      const userId = getUserId(event);
-      const posts = await postRepository.getPosts(userId);
+      const posts = await postRepository.getPosts();
       logger.info('Get Posts API from DynamoDB Table', { posts });      
       const response = { items : posts };
       return formatJSONResponse(response);

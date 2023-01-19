@@ -68,3 +68,20 @@ export async function deletePost(
       }
     })
 }
+
+export async function getUploadUrl(
+  idToken: string,
+  postId: string
+): Promise<string> {
+  const response = await Axios.post(`${apiEndpoint}/posts/${postId}/attachment`, '', {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${idToken}`
+    }
+  })
+  return response.data.uploadUrl
+}
+
+export async function uploadFile(uploadUrl: string, file: Buffer): Promise<void> {
+  await Axios.put(uploadUrl, file)
+}

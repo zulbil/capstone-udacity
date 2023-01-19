@@ -15,9 +15,9 @@ export default class PostService {
 
     constructor() {}
 
-    async getPosts(userId:string): Promise<PostItem[]> {
-        this.logger.info('Get posts for connected user');
-        return await postRepository.getPosts(userId);
+    async getPosts(): Promise<PostItem[]> {
+        this.logger.info('Get posts all posts');
+        return await postRepository.getPosts();
     }
 
     async getPost(userId:string, postId:string): Promise<PostItem> {
