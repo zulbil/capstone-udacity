@@ -6,12 +6,16 @@ import Login from '../components/Login';
 import Sidebar from '../components/Sidebar';
 import Feed from '../components/Feed';
 import { Session } from 'next-auth';
+import { getPosts } from '../services/postService';
+import { Post } from '../types/Post';
+import Widgets from '../components/Widgets';
 
 interface HomeProps {
-  session: Promise<Session>
+  session: Promise<Session>,
+  posts: any[]
 }
 
-export default function Home({ session } : HomeProps) {
+export default function Home({ session, posts } : HomeProps) {
   if (!session) return <Login />
   return (
     <div>
@@ -20,10 +24,9 @@ export default function Home({ session } : HomeProps) {
       </Head>
       <Header></Header>
       <main className="flex">
-        {/* Sidebar */}
         <Sidebar />
-        <Feed />
-        {/* Widgets */}
+        <Feed posts={posts} />
+        <Widgets />
       </main>
     </div>
   )
@@ -31,9 +34,15 @@ export default function Home({ session } : HomeProps) {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession(context)
+  console.log('Sesssion :', session)
+  const  idToken  = session ? session.idToken : null
+  console.log('ID Token ', idToken)
+  const posts = await getPosts(idToken)
+  console.log('POSTS :', posts)
   return {
     props: {
-      session
+      session,
+      posts
     }
   }
 };
