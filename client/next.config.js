@@ -5,7 +5,8 @@ const nextConfig = {
   images: {
     domains: [
       'links.papareact.com',
-      'lh3.googleusercontent.com'
+      'lh3.googleusercontent.com',
+      'post-app-images-dev.s3.amazonaws.com'
     ]
   },
   webpack : (config) => {
