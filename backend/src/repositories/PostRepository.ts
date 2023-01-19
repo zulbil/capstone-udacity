@@ -11,10 +11,15 @@ export default class PostRepository {
 
     constructor(private docClient: DocumentClient) {}
 
-    async getPosts(): Promise<PostItem[]> {
+    async getPosts(userId: string): Promise<PostItem[]> {
         this.logger.info('Performing query operation on post table index');
-        const result = await this.docClient.scan({
-          TableName: this.postsTable
+        const result = await this.docClient.query({
+          TableName: this.postsTable,
+          IndexName: this.indexName,
+          KeyConditionExpression: 'userId = :userId',
+          ExpressionAttributeValues: {
+            ':userId' : userId
+          }
         }).promise();
     
         const items = result.Items
