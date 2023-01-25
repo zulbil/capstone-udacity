@@ -1,4 +1,5 @@
 import { ChatAlt, Share, ThumbUp } from 'heroicons-react';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import React from 'react'
 
@@ -11,22 +12,24 @@ interface PostProp {
 
 const Post = (props: PostProp) => {
   const {message, attachmentUrl, createdAt, updatedAt } = props
+  const { data } = useSession()
   return (
-    <div className='flex flex-col'>
-      <div className='p-5 bg-white mt-5 rounded-t-2xl shadow-sm'>
+    <div className='flex flex-col mt-5 rounded-t-2xl'>
+      <div className='p-5 bg-white shadow-sm'>
         <div className='flex items-center space-x-2'>
-          <Image 
-            className='rounded-full' 
-            src={attachmentUrl} 
-            width={40}
-            height={40}
-            alt={attachmentUrl}
-            style={{objectFit: 'cover'}}
-          />
+          {data?.user?.image && (
+            <Image
+                src={data?.user?.image}
+                className="rounded-full cursor-pointer"
+                width={40} 
+                height={40} 
+                alt="profile picture"
+            />
+          )}
           <div>
             <p className='font-medium'></p>
             <p className='text-xs text-gray-400'>
-              {createdAt}
+              {(new Date(createdAt)).toDateString()}
             </p>
           </div>
         </div>
@@ -35,11 +38,10 @@ const Post = (props: PostProp) => {
       { attachmentUrl && (
         <div className='relative h-56 md:h-96 bg-white'>
           <Image 
-            className='rounded-full' 
+            width={700} 
+            height={500}
             src={attachmentUrl} 
             alt={attachmentUrl}
-            width={100}
-            height={100}
             style={{objectFit: 'cover'}}
           />
         </div>

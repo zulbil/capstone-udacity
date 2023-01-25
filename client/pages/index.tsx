@@ -33,12 +33,9 @@ export default function Home({ session, posts } : HomeProps) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const session = await getSession(context)
-  console.log('Sesssion :', session)
-  const  idToken  = session ? session.idToken : null
-  console.log('ID Token ', idToken)
-  const posts = await getPosts(idToken)
-  console.log('POSTS :', posts)
+  const session   =   await getSession(context)
+  const  idToken  =   ( session && session.idToken ) ? session.idToken : null
+  const posts     =   (idToken) ? await getPosts(idToken) : []
   return {
     props: {
       session,
