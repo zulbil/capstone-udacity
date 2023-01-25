@@ -9,7 +9,11 @@ import {
   } from "heroicons-react"
 import { Post } from '../types/Post';
 
-const InputBox = () => {
+interface InputBoxProps {
+    onRefreshPost: any
+}
+
+const InputBox = ({ onRefreshPost } : InputBoxProps) => {
     const inputRef                          = useRef(null)
     const filepickerRef                     = useRef(null)
     const [imageToPost, setImageToPost]     = useState(null)
@@ -41,6 +45,7 @@ const InputBox = () => {
             }
             inputRef.current.value = ""
             setLoading(false)
+            onRefreshPost()
         } catch (error: any) {
             setLoading(false)
             setError(error.message)
