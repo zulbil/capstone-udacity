@@ -36,7 +36,7 @@ const Post = (props: PostProp) => {
         <p className='pt-4'>{message}</p>
       </div>
       { attachmentUrl && (
-        <div className='relative h-56 md:h-96 bg-white'>
+        <div className='relative h-56 md:h-96 bg-white overflow-hidden'>
           <Image 
             width={700} 
             height={500}
