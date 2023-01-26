@@ -11,10 +11,10 @@ import { Post } from '../types/Post';
 import { useAuthContext } from '../contexts/AuthContext';
 
 interface InputBoxProps {
-    onRefreshPost: any
+    onAddPost: any
 }
 
-const InputBox = ({ onRefreshPost } : InputBoxProps) => {
+const InputBox = ({ onAddPost } : InputBoxProps) => {
     const inputRef                          = useRef(null)
     const filepickerRef                     = useRef(null)
     const [imageToPost, setImageToPost]     = useState(null)
@@ -47,7 +47,7 @@ const InputBox = ({ onRefreshPost } : InputBoxProps) => {
             }
             inputRef.current.value = ""
             setLoading(false)
-            onRefreshPost()
+            onAddPost(newItem)
         } catch (error: any) {
             setLoading(false)
             setError(error.message)
