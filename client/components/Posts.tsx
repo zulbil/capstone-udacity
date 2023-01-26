@@ -9,9 +9,9 @@ const Posts = ({posts}: PostsProp) => {
 
     return (
         <div>
-            { (posts.length > 0) && posts.map((post:any) => (
+            { (posts.length > 0) && posts.map((post:any, pos: number) => (
                 <Post
-                    key={post.id}
+                    key={pos}
                     message={post.message}
                     attachmentUrl={post.attachmentUrl}
                     createdAt={post.createdAt}
