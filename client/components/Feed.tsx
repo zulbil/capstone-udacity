@@ -5,14 +5,12 @@ import Posts from './Posts'
 import Stories from './Stories'
 import { getPosts } from '../services/postService'
 
-interface FeedProps {
-  posts: any[]
-}
-const Feed = ({ posts }: FeedProps) => {
-  const [postData, setPostData] = useState(posts)
+const Feed = () => {
+  const [postData, setPostData] = useState<any[]>([])
   const [dataSuccess, setDataSuccess] = useState(false)
-  const { data }  = useSession()
-  const idToken   = ( data && data.idToken ) ? data.idToken :  null
+  const session  = useSession()
+  const data = session?.data
+  const idToken = data?.idToken
 
   const fetchPost = async () => {
     try {

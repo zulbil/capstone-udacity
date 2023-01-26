@@ -8,6 +8,7 @@ import {
     Camera
   } from "heroicons-react"
 import { Post } from '../types/Post';
+import { useAuthContext } from '../contexts/AuthContext';
 
 interface InputBoxProps {
     onRefreshPost: any
@@ -21,6 +22,7 @@ const InputBox = ({ onRefreshPost } : InputBoxProps) => {
     const [loading, setLoading]             = useState(false)
     const [error, setError]                 = useState('')
     const { data }                          = useSession()
+    const { authData, setAuthData } = useAuthContext()
     
     const { user } = data
 

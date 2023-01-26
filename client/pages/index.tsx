@@ -9,13 +9,21 @@ import { Session } from 'next-auth';
 import { getPosts } from '../services/postService';
 import { Post } from '../types/Post';
 import Widgets from '../components/Widgets';
+import { useAuthContext } from '../contexts/AuthContext';
+import { useEffect, useState } from 'react';
 
 interface HomeProps {
-  session: Promise<Session>,
-  posts: any[]
+  session: Promise<Session>
 }
 
-export default function Home({ session, posts } : HomeProps) {
+export default function Home({ session } : HomeProps) {
+
+  const { authData, setAuthData } = useAuthContext()
+
+  useEffect(()=> {
+    setAuthData({ ...authData, session })
+  }, [])
+
   if (!session) return <Login />
   return (
     <div>
@@ -25,7 +33,7 @@ export default function Home({ session, posts } : HomeProps) {
       <Header></Header>
       <main className="flex">
         <Sidebar />
-        <Feed posts={posts} />
+        <Feed />
         <Widgets />
       </main>
     </div>
@@ -34,12 +42,9 @@ export default function Home({ session, posts } : HomeProps) {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session   =   await getSession(context)
-  const  idToken  =   ( session && session.idToken ) ? session.idToken : null
-  const posts     =   (idToken) ? await getPosts(idToken) : []
   return {
     props: {
-      session,
-      posts
+      session
     }
   }
 };
