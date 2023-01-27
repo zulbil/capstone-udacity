@@ -14,6 +14,10 @@ function Login() {
               />
             </div>
             <div className="md:w-8/12 lg:w-5/12 lg:ml-20">
+            <h1 className="mt-6 mb-6 text-center text-3xl font-bold tracking-tight text-gray-900">Welcome to Capstone Udacity App</h1>
+            <div className="mt-6 mb-6">
+              <p>This app is a small facebook clone app. We can login, creat post by uploading image. The user can only see posts that he created.</p>
+            </div>
               <button
                   type="button"
                   className="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out w-full"
