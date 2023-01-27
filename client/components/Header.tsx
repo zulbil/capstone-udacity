@@ -15,8 +15,8 @@ import HeaderIcon from "./HeaderIcon";
 import { useSession, signOut } from "next-auth/react";
 
 function Header() {
-  const { data } = useSession()
-  const { user } = data
+  const { data }  = useSession()
+  const  user     = data?.user
 
   return (
     <div className="sticky top-0 z-50 bg-white flex items-center p-2 lg:px-5 shadow-md">
@@ -57,13 +57,13 @@ function Header() {
       <div className="flex items-center sm:space-x-2 justify-end">
         <Image
             onClick={() => signOut() }
-            src={user?.image}
+            src={user?.image || ''}
             className="rounded-full cursor-pointer"
             width={40} 
             height={40} 
             alt="profile picture"
           />
-        <p className="whitespace-nowrap font-semibold pr-3 hidden">{user.name}</p>
+        <p className="whitespace-nowrap font-semibold pr-3 hidden">{user?.name}</p>
         <ViewGrid className="icon" />
         <Chat className="icon" />
         <Bell className="icon" />

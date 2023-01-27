@@ -14,8 +14,8 @@ interface InputBoxProps {
 }
 
 const InputBox = ({ onAddPost } : InputBoxProps) => {
-    const inputRef                              =   useRef(null)
-    const filepickerRef                         =   useRef(null)
+    const inputRef                              =   useRef<any>(null)
+    const filepickerRef                         =   useRef<any>(null)
     const [imageToPost, setImageToPost]         =   useState(null)
     const [file, setFile]                       =   useState(null)
     const [loading, setLoading]                 =   useState(false)
@@ -75,7 +75,7 @@ const InputBox = ({ onAddPost } : InputBoxProps) => {
             <div className="bg-white p-2 rounded-2xl shadow-md text-gray-500 font-medium mt-6">
                 <div className="flex space-x-4 p-4 items-center">
                     <Image
-                        src={data?.user?.image}
+                        src={data?.user?.image || ''}
                         className="rounded-full cursor-pointer"
                         width={40} 
                         height={40} 
