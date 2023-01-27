@@ -75,7 +75,7 @@ const InputBox = ({ onAddPost } : InputBoxProps) => {
             <div className="bg-white p-2 rounded-2xl shadow-md text-gray-500 font-medium mt-6">
                 <div className="flex space-x-4 p-4 items-center">
                     <Image
-                        src={user?.image}
+                        src={data?.user?.image}
                         className="rounded-full cursor-pointer"
                         width={40} 
                         height={40} 
@@ -86,7 +86,7 @@ const InputBox = ({ onAddPost } : InputBoxProps) => {
                             className="rounded-full h-12 bg-gray-100 flex-grow px-5 focus:outline-none"
                             type="text" 
                             ref={inputRef}
-                            placeholder={`What's on your mind, ${user?.name} ?`} 
+                            placeholder={`What's on your mind, ${data?.user?.name} ?`} 
                         />
                         <button hidden type="submit" onClick={sendPost}></button>
                     </form>
