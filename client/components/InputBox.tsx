@@ -1,37 +1,34 @@
 import React, { useRef, useState } from 'react'
 import Image from "next/image";
 import { useSession } from "next-auth/react";
-import { createPost, getUploadUrl, updatePost, uploadFile } from "../services/postService"
+import { createPost, getUploadUrl, uploadFile } from "../services/postService"
 import {
     VideoCamera,
     EmojiHappy,
     Camera
   } from "heroicons-react"
-import { Post } from '../types/Post';
-import { useAuthContext } from '../contexts/AuthContext';
+import { Post } from '../interfaces/Post';
 
 interface InputBoxProps {
     onAddPost: any
 }
 
 const InputBox = ({ onAddPost } : InputBoxProps) => {
-    const inputRef                          = useRef(null)
-    const filepickerRef                     = useRef(null)
-    const [imageToPost, setImageToPost]     = useState(null)
-    const [file, setFile]                   = useState(null)
-    const [loading, setLoading]             = useState(false)
-    const [error, setError]                 = useState('')
-    const { data }                          = useSession()
-    const { authData, setAuthData } = useAuthContext()
-    
-    const { user } = data
+    const inputRef                              =   useRef(null)
+    const filepickerRef                         =   useRef(null)
+    const [imageToPost, setImageToPost]         =   useState(null)
+    const [file, setFile]                       =   useState(null)
+    const [loading, setLoading]                 =   useState(false)
+    const [error, setError]                     =   useState('')
+    const session                               =   useSession()
+    const data                                  =   session?.data
+    const idToken                               =   data?.user?.idToken as string
 
     const sendPost = async (e: any) => {
         try {
             e.preventDefault();
             setLoading(true)
             if (!inputRef.current?.value) throw new Error("Your input is required");
-            const { idToken, user } = data
             const newPost : Post = { message: inputRef.current?.value }
                 
             const newItem = await createPost(idToken, newPost)
