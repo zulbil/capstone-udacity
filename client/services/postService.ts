@@ -1,5 +1,5 @@
 import Axios from "axios";
-import { Post } from "../types/Post";
+import { Post } from "../interfaces/Post";
 
 const apiEndpoint = process.env.NEXT_PUBLIC_APP_DOMAIN || ''
 
