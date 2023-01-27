@@ -10,7 +10,9 @@ const Feed = () => {
   const [newPost, setNewPost]           =   useState({})
   const session                         =   useSession()
   const data                            =   session?.data
-  const idToken                         =   data?.idToken
+  const idToken                         =   data?.user?.idToken
+
+  console.log('ID TOKEN ', idToken)
 
   const fetchPost = async () => {
     try {
@@ -21,7 +23,7 @@ const Feed = () => {
     }
   }
 
-  function addPost(post:any){
+  function addPost(post: any){
     setNewPost(post)
   }
 
